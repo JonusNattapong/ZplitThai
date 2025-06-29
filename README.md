@@ -1,152 +1,134 @@
-# my_thai_tokenizer
+# ZplitThai: Thai Tokenizer Toolkit
 
-ML-based Thai word tokenizer (template)
+ระบบ tokenizer ภาษาไทยแบบ ML (BiLSTM-CRF) และ subword (SentencePiece, HuggingFace Tokenizers)
 
 ## โครงสร้างโปรเจกต์
 
 ```text
-my_thai_tokenizer/
-├── __init__.py
-├── tokenizer.py         # core logic (ML-based)
-├── example.py           # ตัวอย่างการใช้งาน
-├── data/                # สำหรับเก็บ dataset (เช่นไฟล์ .txt, .csv, .tsv)
-└── model/               # สำหรับเก็บ model ที่ train แล้ว
+ZplitThai/
+├── train.py                  # เทรน BiLSTM-CRF tokenizer (ML-based)
+├── train_sentencepiece.py    # เทรน SentencePiece tokenizer
+├── train_hf_tokenizer.py     # เทรน HuggingFace BPE tokenizer
+├── sp_tokenizer.py           # ใช้งาน SentencePiece tokenizer
+├── clean.py                  # ฟังก์ชัน clean/preprocess ข้อมูล
+├── prepare_corpus.py         # รวมไฟล์ข้อความหลายไฟล์
+├── analyze_iob_dataset.py    # QC/วิเคราะห์ dataset IOB
+├── hfupload.py               # อัปโหลด tokenizer ขึ้น HuggingFace Hub
+├── datasethfopload.py        # อัปโหลด dataset ขึ้น HuggingFace Hub
+├── data/                     # dataset (txt, IOB, ฯลฯ)
+│   ├── combined_thai_corpus.txt
+│   ├── train_iob_clean.txt
+│   ├── train_iob_strict.txt
+│   └── ...
+├── model/                    # โมเดลที่ train แล้ว (bilstm.pth, bilstm_crf.pth, thai_spm.model)
+├── Bitthaitokenizer/         # HuggingFace tokenizer (tokenizer.json, vocab.json, tokenizer_config.json)
+├── .gitignore
+└── README.md
 ```
 
-## วิธีใช้งานครบจบ (Workflow)
+## Workflow ครบจบ (ML, Subword, HuggingFace)
 
-1. เตรียมไฟล์ข้อความภาษาไทย (เช่น .txt หลายไฟล์ใน data/)
-2. รวมไฟล์ทั้งหมดเป็นไฟล์เดียว (thai_corpus.txt):
+### 1. เตรียมและ clean dataset
+
+- วางไฟล์ข้อความภาษาไทย (.txt) ใน `data/`
+- รวมไฟล์เป็น corpus เดียว:
 
 ```bash
 python prepare_corpus.py
 ```
 
-3. ติดตั้ง dependencies:
+- QC/clean dataset (IOB):
 
 ```bash
-pip install sentencepiece
+python analyze_iob_dataset.py
+python clean.py
 ```
 
-4. Train SentencePiece tokenizer:
+### 2. ติดตั้ง dependencies
+
+```bash
+pip install -r requirements.txt
+# หรือ
+pip install sentencepiece transformers huggingface_hub pythainlp
+```
+
+### 3. เทรน tokenizer
+
+#### (A) ML-based (BiLSTM-CRF)
+
+```bash
+python train.py
+```
+- รองรับ resume training, validation, F1-score, checkpoint
+- โมเดลจะถูกบันทึกใน `model/`
+
+#### (B) SentencePiece
 
 ```bash
 python train_sentencepiece.py
 ```
+- ปรับพารามิเตอร์ในสคริปต์ได้ตามต้องการ
+- โมเดลจะถูกบันทึกใน `model/thai_spm.model`
 
-5. ใช้งาน tokenizer ที่ train เอง:
+#### (C) HuggingFace Tokenizer (BPE)
 
+```bash
+python train_hf_tokenizer.py
+```
+- ได้ไฟล์ `tokenizer.json`, `vocab.json`, `tokenizer_config.json` ใน `Bitthaitokenizer/`
+
+### 4. อัปโหลด dataset/tokenizer ขึ้น HuggingFace Hub
+
+- อัปโหลด tokenizer:
+
+```bash
+python hfupload.py
+```
+- อัปโหลด dataset:
+```bash
+python datasethfopload.py
+```
+
+### 5. ใช้งาน tokenizer
+
+#### (A) SentencePiece
 ```python
 from sp_tokenizer import ThaiSentencePieceTokenizer
-
-tokenizer = ThaiSentencePieceTokenizer('model/thai_spm.model')
-text = "ฉันรักประเทศไทยหมูกรอบอร่อย"
-tokens = tokenizer.word_tokenize(text)
+sp = ThaiSentencePieceTokenizer('model/thai_spm.model')
+tokens = sp.word_tokenize("ฉันรักประเทศไทยหมูกรอบอร่อย")
 print(tokens)
 ```
 
-- สามารถนำ model นี้ไปใช้กับ Huggingface Transformers ได้ทันที
-- รองรับข้อความไทยทุกแบบ ไม่ต้องพึ่ง wordlist
-
-## การสร้าง tokenizer ภาษาไทยด้วย SentencePiece
-
-SentencePiece เป็น unsupervised tokenizer ที่เหมาะกับภาษาไทยมาก (ใช้ใน WangchanBERTa, T5, ฯลฯ)
-
-### ขั้นตอน
-
-1. เตรียมไฟล์ corpus ข้อความภาษาไทย (เช่น data/thai_corpus.txt)
-2. ติดตั้ง sentencepiece
-
-```bash
-pip install sentencepiece
-```
-
-3. Train tokenizer (Unigram หรือ BPE)
-
-```bash
-python -m sentencepiece --input=data/thai_corpus.txt --model_prefix=model/thai_spm --vocab_size=32000 --model_type=unigram
-```
-
-- `--input` : ไฟล์ข้อความภาษาไทย (หนึ่งบรรทัดต่อหนึ่งประโยค)
-- `--model_prefix` : prefix ของไฟล์ model ที่จะได้ (เช่น model/thai_spm.model, model/thai_spm.vocab)
-- `--vocab_size` : ขนาด vocabulary (เช่น 16000, 32000)
-- `--model_type` : เลือก 'unigram' (เหมาะกับภาษาไทย) หรือ 'bpe'
-
-4. ใช้งาน tokenizer ใน Python
-
-```python
-import sentencepiece as spm
-sp = spm.SentencePieceProcessor()
-sp.load('model/thai_spm.model')
-text = "ฉันรักประเทศไทยหมูกรอบอร่อย"
-tokens = sp.encode(text, out_type=str)
-print(tokens)
-```
-
-## ตัวอย่างไฟล์ corpus
-
-ไฟล์ตัวอย่าง (data/thai_corpus_example.txt):
-
-```
-ฉันรักประเทศไทยมาก
-หมูกรอบอร่อยที่สุด
-วันนี้อากาศดี
-ไปเที่ยวเชียงใหม่กับเพื่อน
-ภาษาไทยไม่มีการเว้นวรรคระหว่างคำ
-```
-
-## สคริปต์ช่วยเตรียม corpus
-
-ใช้ `prepare_corpus.py` เพื่อรวมไฟล์ .txt หลายไฟล์ใน data/ เป็นไฟล์เดียวสำหรับ train SentencePiece:
-
-```bash
-python prepare_corpus.py
-```
-
-จะได้ไฟล์ `data/thai_corpus.txt` สำหรับ train tokenizer
-
-## Integration กับ PyThaiNLP/transformers
-
-### ใช้ tokenizer ที่ train ด้วย SentencePiece กับ PyThaiNLP
-
-```python
-import sentencepiece as spm
-sp = spm.SentencePieceProcessor()
-sp.load('model/thai_spm.model')
-text = "ฉันรักประเทศไทยหมูกรอบอร่อย"
-tokens = sp.encode(text, out_type=str)
-print(tokens)
-```
-
-### ใช้กับ Huggingface Transformers
-
+#### (B) HuggingFace Tokenizer
 ```python
 from transformers import AutoTokenizer
-# โหลด tokenizer ที่ train เอง (เช่น WangchanBERTa-style)
-tokenizer = AutoTokenizer.from_pretrained('path/to/model_dir')
-text = "ฉันรักประเทศไทยหมูกรอบอร่อย"
-tokens = tokenizer.tokenize(text)
+tokenizer = AutoTokenizer.from_pretrained('Bitthaitokenizer')
+tokens = tokenizer.tokenize("ฉันรักประเทศไทยหมูกรอบอร่อย")
 print(tokens)
 ```
 
-- สามารถนำ model_dir ที่ได้จากการ train SentencePiece ไปใช้กับ transformers ได้ทันที (แค่มี .model, .vocab, และไฟล์ config)
+#### (C) ML-based (BiLSTM-CRF)
+```python
+# ดูตัวอย่างใน train.py หรือ Bitthaitokenizer/README.md
+```
 
-### ข้อดี
-- ไม่ต้องพึ่ง wordlist หรือ dictionary
-- เหมาะกับภาษาไทยและภาษาอื่นที่ไม่มีการเว้นวรรค
-- ใช้กับงาน NLP สมัยใหม่ (BERT, T5, etc.)
+### 6. Integration กับ PyThaiNLP/Transformers/LLM
+- ใช้ tokenizer ที่ train เองกับ PyThaiNLP หรือ transformers ได้ทันที
+- รองรับ LLM, Thai NLP, downstream task
 
-## หมายเหตุ
+## หมายเหตุ/ข้อควรทราบ
+- Dataset/Tokenizer ผ่าน QC/clean แล้ว (ดู analyze_iob_dataset.py, clean.py)
+- สามารถปรับแต่ง pre-tokenizer/custom logic เพิ่มเติมได้ (เช่น PyThaiNLP)
+- รองรับการอัปโหลด HuggingFace Hub (dataset/tokenizer)
+- ตัวอย่างไฟล์สำคัญ: train.py, train_sentencepiece.py, train_hf_tokenizer.py, sp_tokenizer.py, Bitthaitokenizer/
+- README และ workflow ครบถ้วน พร้อมใช้งานจริง
 
-- คุณสามารถนำ dataset (เช่น BEST2010, LEXiTRON, หรือชุดข้อมูลอื่น) มาใส่ในโฟลเดอร์ `data/`
-- สามารถนำโมเดลที่ train แล้วมาใส่ในโฟลเดอร์ `model/`
-- ตัวอย่างนี้เป็น template สำหรับเริ่มต้นพัฒนา ML-based tokenizer (BiLSTM+CRF, transformer, sentencepiece ฯลฯ)
+## ตัวอย่างไฟล์สำคัญ
+- `data/combined_thai_corpus.txt` : corpus หลัก
+- `data/train_iob_clean.txt` : dataset IOB ที่ QC แล้ว
+- `model/thai_spm.model` : SentencePiece model
+- `Bitthaitokenizer/` : HuggingFace tokenizer
+- `train.py`, `train_sentencepiece.py`, `train_hf_tokenizer.py` : สคริปต์เทรน tokenizer
+- `hfupload.py`, `datasethfopload.py` : อัปโหลดขึ้น HuggingFace Hub
 
-## สรุปไฟล์สำคัญ
-- `data/thai_corpus_example.txt` : ตัวอย่างไฟล์ข้อความ
-- `prepare_corpus.py` : รวมไฟล์ข้อความหลายไฟล์
-- `train_sentencepiece.py` : train tokenizer
-- `sp_tokenizer.py` : ใช้งาน tokenizer ที่ train เอง
-- `model/thai_spm.model` : ไฟล์ model ที่ได้
-
-ครบจบ พร้อมใช้งานจริงสำหรับภาษาไทย!
+ครบจบ พร้อมใช้งานจริงสำหรับภาษาไทย ทั้ง ML-based และ subword tokenizer!
