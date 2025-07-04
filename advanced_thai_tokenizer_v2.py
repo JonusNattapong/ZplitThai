@@ -14,50 +14,55 @@ from typing import Dict, List, Any, Tuple
 def create_advanced_thai_tokenizer_v2():
     """Create an even better Thai tokenizer with advanced features"""
     
-    print("🚀 Creating Advanced Thai Tokenizer V2...")
+    print("🚀 Creating Advanced Thai Tokenizer V3...")
     print("=" * 60)
     
-    # Advanced configuration
-    print("1️⃣ Setting up Advanced Unigram model...")
+    # === 1. Advanced configuration ===
+    print("1️⃣ Setting up Unigram model (optimized for Thai)...")
     model = models.Unigram()
     tokenizer = Tokenizer(model)
-    
-    # NO normalization - preserve Thai exactly
-    print("2️⃣ Preserving Thai characters (no normalization)...")
+
+    # === 2. No normalization (preserve Thai) ===
+    print("2️⃣ Disabling normalization (preserve Thai characters exactly)...")
     tokenizer.normalizer = None
-    
-    # Smarter pre-tokenization for Thai
-    print("3️⃣ Setting up smart pre-tokenization...")
-    # Only split on major punctuation, preserve Thai structure
-    tokenizer.pre_tokenizer = pre_tokenizers.Sequence([
-        pre_tokenizers.Split(pattern=r'[.!?।॥\n]', behavior="removed"),  # Major sentence breaks
-        pre_tokenizers.Punctuation(behavior="isolated")  # Isolate punctuation
-    ])
-    
-    # No post-processor for clean Thai text
+
+    # === 3. Minimal pre-tokenization (punctuation only) ===
+    print("3️⃣ Setting up minimal pre-tokenization (punctuation only)...")
+    tokenizer.pre_tokenizer = pre_tokenizers.Punctuation()
+
+    # === 4. No post-processor (avoid spacing issues) ===
     print("4️⃣ Disabling post-processor for clean output...")
     tokenizer.post_processor = None
-    
-    # No decoder for direct concatenation
-    print("5️⃣ Using direct decoding...")
+
+    # === 5. No decoder (let decoding be natural) ===
+    print("5️⃣ Disabling decoder (direct decoding)...")
     tokenizer.decoder = None
-    
-    # Enhanced Thai training data
-    print("6️⃣ Creating comprehensive Thai training data...")
-    thai_training_data = create_comprehensive_thai_dataset()
-    
-    print(f"   📚 Training with {len(thai_training_data)} examples")
-    
-    # Advanced trainer settings
-    print("7️⃣ Setting up advanced trainer...")
+
+    # === 6. Load Thai training data from file ===
+    print("6️⃣ Loading Thai training data from 'combined_thai_corpus.txt' ...")
+    corpus_path = Path("data/combined_thai_corpus.txt")
+    if not corpus_path.exists():
+        print(f"❌ File not found: {corpus_path}")
+        return None
+    def thai_corpus_iterator():
+        with open(corpus_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    yield line
+    thai_training_data = thai_corpus_iterator()
+    print(f"   📚 Training from file: {corpus_path}")
+
+    # === 7. Advanced trainer settings (match best config from codebase) ===
+    print("7️⃣ Setting up advanced trainer (optimized config)...")
     trainer = trainers.UnigramTrainer(
-        vocab_size=15000,  # Larger vocab for better coverage
-        special_tokens=["<unk>", "<pad>", "<s>", "</s>"],  # Essential tokens only
+        vocab_size=50000,  # Match best config for compression/coverage
+        special_tokens=["<unk>"],  # Minimal special tokens for Unigram
         show_progress=True,
         unk_token="<unk>",
-        shrinking_factor=0.75,  # Better subword learning
-        max_piece_length=20,    # Allow longer Thai words
-        n_sub_iterations=2      # More training iterations
+        shrinking_factor=0.75,
+        max_piece_length=16,
+        n_sub_iterations=2
     )
     
     # Train the tokenizer
@@ -407,7 +412,7 @@ def save_advanced_tokenizer(tokenizer: Tokenizer, test_results: Dict, efficiency
     
     print("\n💾 Saving Advanced Thai Tokenizer...")
     
-    save_dir = Path("AdvancedThaiTokenizerV2")
+    save_dir = Path("AdvancedThaiTokenizerV3")
     save_dir.mkdir(exist_ok=True)
     
     # Save tokenizer
@@ -507,7 +512,7 @@ print(f"Decoded: {decoded}")
         json.dump(usage_examples, f, ensure_ascii=False, indent=2)
     
     # Create README
-    readme_content = f"""# Advanced Thai Tokenizer V2
+    readme_content = f"""# Advanced Thai Tokenizer V3
 
 ## Overview
 Advanced Thai language tokenizer with improved handling of Thai text, mixed content, and modern vocabulary.
@@ -558,7 +563,7 @@ Created: July 2025
 def main():
     """Main function for advanced Thai tokenizer development"""
     
-    print("🚀 Advanced Thai Tokenizer Development V2")
+    print("🚀 Advanced Thai Tokenizer Development V3")
     print("=" * 70)
     
     # Create advanced tokenizer
@@ -580,7 +585,7 @@ def main():
     # Final summary
     overall_success = test_results["overall"]["passed"] / test_results["overall"]["total"] * 100
     
-    print(f"\n🎉 Advanced Thai Tokenizer V2 Complete!")
+    print(f"\n🎉 Advanced Thai Tokenizer V3 Complete!")
     print("=" * 70)
     print(f"📊 Overall Performance: {overall_success:.1f}%")
     print(f"📁 Saved to: {save_dir}")

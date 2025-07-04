@@ -16,11 +16,11 @@ def load_tokenizers():
     """Load all available tokenizer versions"""
     tokenizers = {}
     
-    # Load Advanced V2
-    adv_v2_path = Path("AdvancedThaiTokenizerV2/tokenizer.json")
+    # Load Advanced V3
+    adv_v2_path = Path("AdvancedThaiTokenizerV3/tokenizer.json")
     if adv_v2_path.exists():
-        tokenizers["Advanced V2"] = Tokenizer.from_file(str(adv_v2_path))
-        print("✅ Loaded Advanced V2")
+        tokenizers["Advanced V3"] = Tokenizer.from_file(str(adv_v2_path))
+        print("✅ Loaded Advanced V3")
     
     # Load Final Thai Tokenizer
     final_path = Path("FinalThaiTokenizer")
@@ -79,7 +79,7 @@ def test_real_world_content():
     return test_cases
 
 def decode_tokens_v2(tokenizer, encoding):
-    """Manual decoding for Advanced V2 tokenizer"""
+    """Manual decoding for Advanced V3 tokenizer"""
     if hasattr(encoding, 'tokens'):
         # Filter out special tokens
         filtered_tokens = [token for token in encoding.tokens 
@@ -110,7 +110,7 @@ def benchmark_tokenizer(name, tokenizer, test_cases):
         case_start = time.time()
         
         try:
-            if name == "Advanced V2":
+            if name == "Advanced V3":
                 # Use tokenizers library
                 encoding = tokenizer.encode(text)
                 tokens = encoding.tokens

@@ -1,15 +1,15 @@
 {
-  "Advanced V2": {
-    "name": "Advanced V2",
-    "total_time": 0.007215738296508789,
+  "Advanced V3": {
+    "name": "Advanced V3",
+    "total_time": 0.005129814147949219,
     "cases": [
       {
         "id": 1,
         "text": "วันนี้ไป Starbucks กับเพื่อน ดื่ม Green Tea Latte ...",
         "char_count": 79,
-        "token_count": 60,
-        "ratio": 1.3166666666666667,
-        "time": 0.003863096237182617,
+        "token_count": 29,
+        "ratio": 2.7241379310344827,
+        "time": 0.0023202896118164062,
         "has_encoding_issues": false,
         "decoded_matches": true
       },
@@ -17,9 +17,9 @@
         "id": 2,
         "text": "Apple เปิดตัว iPhone 15 Pro Max ราคาเริ่มต้น 44,90...",
         "char_count": 80,
-        "token_count": 61,
-        "ratio": 1.3114754098360655,
-        "time": 0.0002486705780029297,
+        "token_count": 38,
+        "ratio": 2.1052631578947367,
+        "time": 0.00019788742065429688,
         "has_encoding_issues": false,
         "decoded_matches": true
       },
@@ -27,9 +27,9 @@
         "id": 3,
         "text": "Meeting วันจันทร์ เวลา 14:00 น. ที่ห้องประชุม A พู...",
         "char_count": 88,
-        "token_count": 59,
-        "ratio": 1.4915254237288136,
-        "time": 0.000225067138671875,
+        "token_count": 37,
+        "ratio": 2.3783783783783785,
+        "time": 0.00019168853759765625,
         "has_encoding_issues": false,
         "decoded_matches": true
       },
@@ -37,9 +37,9 @@
         "id": 4,
         "text": "การติดตั้ง Python 3.11 บน Windows 10/11 โดยใช้ pip...",
         "char_count": 82,
-        "token_count": 75,
-        "ratio": 1.0933333333333333,
-        "time": 0.00016546249389648438,
+        "token_count": 33,
+        "ratio": 2.484848484848485,
+        "time": 0.00015211105346679688,
         "has_encoding_issues": false,
         "decoded_matches": true
       },
@@ -47,9 +47,9 @@
         "id": 5,
         "text": "ร้าน McDonald's สาขาใหม่ที่ Siam Paragon มี Big Ma...",
         "char_count": 87,
-        "token_count": 66,
-        "ratio": 1.3181818181818181,
-        "time": 0.00019598007202148438,
+        "token_count": 37,
+        "ratio": 2.3513513513513513,
+        "time": 0.00011920928955078125,
         "has_encoding_issues": false,
         "decoded_matches": true
       },
@@ -57,9 +57,9 @@
         "id": 6,
         "text": "Flight TG123 จาก Bangkok (BKK) ไป Tokyo (NRT) เวลา...",
         "char_count": 89,
-        "token_count": 68,
-        "ratio": 1.3088235294117647,
-        "time": 0.00017952919006347656,
+        "token_count": 44,
+        "ratio": 2.022727272727273,
+        "time": 0.00017142295837402344,
         "has_encoding_issues": false,
         "decoded_matches": true
       },
@@ -67,9 +67,9 @@
         "id": 7,
         "text": "งานวิจัย Machine Learning สำหรับ Natural Language ...",
         "char_count": 86,
-        "token_count": 79,
-        "ratio": 1.0886075949367089,
-        "time": 0.0001773834228515625,
+        "token_count": 29,
+        "ratio": 2.9655172413793105,
+        "time": 9.322166442871094e-05,
         "has_encoding_issues": false,
         "decoded_matches": true
       },
@@ -77,9 +77,9 @@
         "id": 8,
         "text": "เล่น FIFA 24 กับเพื่อน ทีม Real Madrid vs Barcelon...",
         "char_count": 71,
-        "token_count": 57,
-        "ratio": 1.2456140350877194,
-        "time": 0.00016069412231445312,
+        "token_count": 31,
+        "ratio": 2.2903225806451615,
+        "time": 0.0002675056457519531,
         "has_encoding_issues": false,
         "decoded_matches": true
       },
@@ -87,9 +87,9 @@
         "id": 9,
         "text": "ซื้อ MacBook Pro 16\" M3 Max ราคา 89,900 บาท ผ่อน 0...",
         "char_count": 90,
-        "token_count": 70,
-        "ratio": 1.2857142857142858,
-        "time": 0.0001976490020751953,
+        "token_count": 41,
+        "ratio": 2.1951219512195124,
+        "time": 0.00014019012451171875,
         "has_encoding_issues": false,
         "decoded_matches": true
       },
@@ -97,24 +97,24 @@
         "id": 10,
         "text": "กระทรวงสาธารณสุข ออกประกาศ COVID-19 ระลอกใหม่ ให้ป...",
         "char_count": 82,
-        "token_count": 68,
-        "ratio": 1.2058823529411764,
-        "time": 0.00023484230041503906,
+        "token_count": 22,
+        "ratio": 3.727272727272727,
+        "time": 0.00031828880310058594,
         "has_encoding_issues": false,
         "decoded_matches": true
       }
     ],
     "stats": {
-      "avg_tokens": 66.3,
-      "avg_ratio": 1.257918552036199,
+      "avg_tokens": 34.1,
+      "avg_ratio": 2.4457478005865103,
       "total_chars": 834,
-      "total_tokens": 663,
+      "total_tokens": 341,
       "success_rate": 100.0
     }
   },
   "Final": {
     "name": "Final",
-    "total_time": 0.006814479827880859,
+    "total_time": 0.00439143180847168,
     "cases": [
       {
         "id": 1,
@@ -122,7 +122,7 @@
         "char_count": 79,
         "token_count": 34,
         "ratio": 2.323529411764706,
-        "time": 0.0026047229766845703,
+        "time": 0.0019693374633789062,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -132,7 +132,7 @@
         "char_count": 80,
         "token_count": 38,
         "ratio": 2.1052631578947367,
-        "time": 0.00040459632873535156,
+        "time": 0.00020265579223632812,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -142,7 +142,7 @@
         "char_count": 88,
         "token_count": 41,
         "ratio": 2.1463414634146343,
-        "time": 0.0003476142883300781,
+        "time": 0.00018644332885742188,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -152,7 +152,7 @@
         "char_count": 82,
         "token_count": 33,
         "ratio": 2.484848484848485,
-        "time": 0.0002732276916503906,
+        "time": 0.0001475811004638672,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -162,7 +162,7 @@
         "char_count": 87,
         "token_count": 37,
         "ratio": 2.3513513513513513,
-        "time": 0.0002970695495605469,
+        "time": 0.00017786026000976562,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -172,7 +172,7 @@
         "char_count": 89,
         "token_count": 47,
         "ratio": 1.8936170212765957,
-        "time": 0.0003745555877685547,
+        "time": 0.00018334388732910156,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -182,7 +182,7 @@
         "char_count": 86,
         "token_count": 28,
         "ratio": 3.0714285714285716,
-        "time": 0.0003266334533691406,
+        "time": 0.00011992454528808594,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -192,7 +192,7 @@
         "char_count": 71,
         "token_count": 34,
         "ratio": 2.088235294117647,
-        "time": 0.00029015541076660156,
+        "time": 0.00015544891357421875,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -202,7 +202,7 @@
         "char_count": 90,
         "token_count": 44,
         "ratio": 2.0454545454545454,
-        "time": 0.00036787986755371094,
+        "time": 0.0001983642578125,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -212,7 +212,7 @@
         "char_count": 82,
         "token_count": 35,
         "ratio": 2.342857142857143,
-        "time": 0.0004646778106689453,
+        "time": 0.0002651214599609375,
         "has_encoding_issues": false,
         "decoded_matches": false
       }
@@ -227,7 +227,7 @@
   },
   "Fixed V2": {
     "name": "Fixed V2",
-    "total_time": 0.004452705383300781,
+    "total_time": 0.002054929733276367,
     "cases": [
       {
         "id": 1,
@@ -235,7 +235,7 @@
         "char_count": 79,
         "token_count": 34,
         "ratio": 2.323529411764706,
-        "time": 0.0003676414489746094,
+        "time": 0.00026035308837890625,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -245,7 +245,7 @@
         "char_count": 80,
         "token_count": 38,
         "ratio": 2.1052631578947367,
-        "time": 0.00033664703369140625,
+        "time": 0.00017452239990234375,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -255,7 +255,7 @@
         "char_count": 88,
         "token_count": 41,
         "ratio": 2.1463414634146343,
-        "time": 0.0003561973571777344,
+        "time": 0.0001773834228515625,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -265,7 +265,7 @@
         "char_count": 82,
         "token_count": 33,
         "ratio": 2.484848484848485,
-        "time": 0.00025463104248046875,
+        "time": 0.00013875961303710938,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -275,7 +275,7 @@
         "char_count": 87,
         "token_count": 37,
         "ratio": 2.3513513513513513,
-        "time": 0.00025177001953125,
+        "time": 0.0001571178436279297,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -285,7 +285,7 @@
         "char_count": 89,
         "token_count": 47,
         "ratio": 1.8936170212765957,
-        "time": 0.0002982616424560547,
+        "time": 0.00014543533325195312,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -295,7 +295,7 @@
         "char_count": 86,
         "token_count": 28,
         "ratio": 3.0714285714285716,
-        "time": 0.0002961158752441406,
+        "time": 0.00012445449829101562,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -305,7 +305,7 @@
         "char_count": 71,
         "token_count": 34,
         "ratio": 2.088235294117647,
-        "time": 0.00026345252990722656,
+        "time": 0.00011920928955078125,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -315,7 +315,7 @@
         "char_count": 90,
         "token_count": 44,
         "ratio": 2.0454545454545454,
-        "time": 0.0003285408020019531,
+        "time": 0.00014638900756835938,
         "has_encoding_issues": false,
         "decoded_matches": false
       },
@@ -325,7 +325,7 @@
         "char_count": 82,
         "token_count": 35,
         "ratio": 2.342857142857143,
-        "time": 0.000308990478515625,
+        "time": 0.00016546249389648438,
         "has_encoding_issues": false,
         "decoded_matches": false
       }
